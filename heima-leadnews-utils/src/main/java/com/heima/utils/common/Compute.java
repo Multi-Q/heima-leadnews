@@ -12,7 +12,7 @@ public class Compute {
         double ss = SimilarDegree(content, title);
         System.out.println(ss);
     }
-    /*
+    /**
      * 计算相似度
      * */
     public static double SimilarDegree(String strA, String strB) {
@@ -25,7 +25,7 @@ public class Compute {
     }
 
 
-    /*
+    /**
      * 将字符串的所有数据依次写成一行
      * */
     public static String removeSign(String str) {
@@ -40,7 +40,7 @@ public class Compute {
     }
 
 
-    /*
+    /**
      * 判断字符是否为汉字，数字和字母，
      * 因为对符号进行相似度比较没有实际意义，故符号不加入考虑范围。
      * */
@@ -50,7 +50,7 @@ public class Compute {
     }
 
 
-    /*
+    /**
      * 求公共子串，采用动态规划算法。
      * 其不要求所求得的字符在所给的字符串中是连续的。
      *
@@ -101,7 +101,7 @@ public class Compute {
     }
 
 
-    /*
+    /**
      * 结果转换成百分比形式
      * */
     public static String similarityResult(double resule) {
