@@ -1,15 +1,19 @@
 # 项目学习文档
 
 # 一、前言
+
 ## 1、Docker安装Nacos
+
 步骤：
 
 ①docker拉取镜像
+
 ```cmd
 docker pull nacos/nacos-server:1.2.0
 ```
 
 ②创建容器
+
 ```cmd
    docker run --env Mode=standalone --name nacos --restart=always -d -p 8848:8848 nacos/nacos-server:1.2.0
 ```
@@ -61,32 +65,244 @@ server{
 ```
 
 ②将nginx.conf文件内容清空，替换为下面内容：
-```js
-#user  nobody;
-worker_processes  1;
 
-events {
-    worker_connections  1024;
+```js
+#user
+nobody;
+worker_processes
+1;
+
+events
+{
+    worker_connections
+    1024;
 }
-http {
-    include       mime.types;
-    default_type  application/octet-stream;
-    sendfile        on;
-    keepalive_timeout  65;
-	# 引入自定义配置文件
-	include leadnews.conf/*.conf;
+http
+{
+    include
+    mime.types;
+    default_type
+    application / octet - stream;
+    sendfile
+    on;
+    keepalive_timeout
+    65;
+    # 引入自定义配置文件
+    include
+    leadnews.conf/*.conf;
 }
 ```
 
 ④ ：启动nginx
 
- 在nginx安装包中使用命令提示符打开，输入命令nginx启动项目
+在nginx安装包中使用命令提示符打开，输入命令nginx启动项目
 
- 可查看进程，检查nginx是否启动
+可查看进程，检查nginx是否启动
 
- 重新加载配置文件：`nginx -s reload`
+重新加载配置文件：`nginx -s reload`
 
-⑤：打开前端项目进行测试  -- >  http://localhost:8801
+⑤：打开前端项目进行测试 -- >  http://localhost:8801
 
- 用谷歌浏览器打开，调试移动端模式进行访问
+用谷歌浏览器打开，调试移动端模式进行访问
+
+# 三、Freemarker模板引擎
+
+## 3.1 常用语法
+
+1、注释
+
+```jsp
+<#-- 我是注释 -->
+```
+
+2、插值：用`${..}`部分，freemarker会用真实的值代替${..}
+
+```jsp
+    Hello ${name}
+```
+
+3、FTL指令：和HTML标记类似，名字前加`#`加以区分，freemarker会解析标签中的`表达式`或`逻辑`
+
+```jsp
+<# >FTL指令</#>
+```
+
+3、文本。进文本信息，这些不是freemarker的注释、插值、ftl指令的内容freemarker忽略解析，直接输出内容。
+
+```jsp
+我是单纯的纯文本
+```
+
+## 3.2 指令语法
+
+### 3.3.1  list
+
+指令格式：`<#list></#list>`
+
+用法：
+
+```jsp
+<#-- stus是数据源 ， stu是迭代变量 -->
+<#list stus as stu>
+    <tr>
+        <td>${stu_index+1}</td>
+        <td>${stu.name}</td>
+        <td>${stu.age}</td>
+        <td>${stu.money}</td>
+    </tr>
+</#list>
+```
+
+注：在迭代变量名后面加`_index`用于获取`下标值`，默认从0开始
+
+### 3.3.2  map
+
+获取map集合中的元素值有两种方式：
+
+`map.keyname.prop`或`map['keyname'].prop`
+
+遍历map集合：
+```jsp
+<#-- ?keys 表示是获取stuMap中的所有key -->
+<#list stuMap?keys as key>
+    key:${key}----value:${stuMap[key]}
+</#list>
+```
+
+### 3.3.3  if
+
+if指令：`<#if></#if>`
+
+```jsp
+<# if stu.age==18>
+    <p>18</p>
+</#if>
+```
+
+### 3.3.4 运算符与比较运算符
+
+
+空值处理，语法：`变量??`
+```jsp
+<#if stu.age??>
+    <#list stus as stu>
+        <p>${stu}</p>
+    </#list> 
+</#if>
+```
+
+缺失变量，格式`变量!替换值`
+```jsp
+<#--如果name值不存在或为空则用""空字符串替代-->
+    <p>Hello ${name!""}</p>
+```
+
+### 3.3.5 内建函数
+
+语法格式：`变量+？+函数名称`
+```jsp
+    <#--集合大小-->
+    <p>${stuList?size}</p>
+    
+    <#--日期类-->
+    <p>${mydate?date}</p>
+     <p>${mydate?datetime}</p>
+    
+```
+
+# 四、MinIO分布式文件存储
+
+## 4.1 Docker内安装MinIO
+①拉取镜像
+```cmd
+docker pull minio/minio
+```
+
+②创建容器
+```cmd
+docker run -p 9000:9000 --name minio -d --restart=always -e "MINIO_ACCESS_KEY=minio" -e "MINIO_SECRET_KEY=minio" -v /home/data:/data -v /home/config:/root/.minio minio/minio server /data
+```
+③访问地址
+http://192.168.200.130:9000
+
+访问账号密码：minio/minio123
+
+## 4.2 快速入门
+
+①创建一个`minio_demo`模块
+
+②导入相关依赖
+```xml
+ <dependencies>
+
+        <dependency>
+            <groupId>io.minio</groupId>
+            <artifactId>minio</artifactId>
+            <version>7.1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-web</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-test</artifactId>
+        </dependency>
+    </dependencies>
+```
+
+③创建测试类
+```java
+package com.itheima.minio.test;
+
+/**
+ * @author QRH
+ * @date 2024/4/9 22:13
+ * @description TODO
+ */
+
+import io.minio.MinioClient;
+import io.minio.PutObjectArgs;
+
+import java.io.FileInputStream;
+
+public class MinioTest {
+
+
+    public static void main(String[] args) {
+
+        FileInputStream fileInputStream = null;
+        try {
+
+            fileInputStream = new FileInputStream("e:\\list.html");
+            ;
+
+            //1.创建minio链接客户端
+            MinioClient minioClient = MinioClient.builder()
+                    .credentials("minio", "minio123")
+                    .endpoint("http://192.168.200.130:9000")
+                    .build();
+            //2.上传
+            PutObjectArgs putObjectArgs = PutObjectArgs.builder()
+                    .object("list.html")//文件名
+                    .contentType("text/html")//文件类型
+                    .bucket("leadnews")//桶名词  与minio创建的名词一致
+                    .stream(fileInputStream, fileInputStream.available(), -1) //文件流
+                    .build();
+            minioClient.putObject(putObjectArgs);
+
+            System.out.println("http://192.168.200.130:9000/leadnews/ak47.jpg");
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+}
+
+```
+
+
+
 
