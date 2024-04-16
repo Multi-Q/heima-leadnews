@@ -22,9 +22,5 @@ public interface WmMaterialService extends IService<WmMaterial> {
      */
     public ResponseResult findList( WmMaterialDto dto);
 
-    /**
-     * 图片收藏
-     * @param id 图片id
-     */
-    public ResponseResult collect(Integer id);
+
 }

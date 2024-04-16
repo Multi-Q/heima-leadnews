@@ -1,4 +1,4 @@
-package com.heima.wemedia.config;
+package com.heima.article.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
@@ -9,6 +9,6 @@ import org.springframework.context.annotation.Configuration;
  * @description TODO
  */
 @Configuration
-@ComponentScan("com.heima.apis.article.fallback")
+@ComponentScan("com.heima.apis")
 public class InitConfig {
 }

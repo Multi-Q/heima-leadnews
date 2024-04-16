@@ -10,13 +10,4 @@
         </foreach>
     </insert>
 
-
-    <update id="updateById" >
-        update wm_material
-        set is_collection=case
-                    when is_collection = 1 then 0
-                    when is_collection = 0 then 1 end
-        where id = #{id}
-    </update>
-
 </mapper>

@@ -10,11 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * @author QRH
- * @date 2024/4/10 19:40
- * @description TODO
- */
+
 @RestController
 @RequestMapping("/api/v1/news")
 public class WmNewsController {
@@ -23,12 +19,17 @@ public class WmNewsController {
     private WmNewsService wmNewsService;
 
     @PostMapping("/list")
-    public ResponseResult findAll(@RequestBody WmNewsPageReqDto dto){
-        return  wmNewsService.findAll(dto);
+    public ResponseResult findList(@RequestBody WmNewsPageReqDto dto) {
+        return wmNewsService.findList(dto);
     }
 
     @PostMapping("/submit")
-    public ResponseResult submitNews(@RequestBody WmNewsDto dto){
-        return  wmNewsService.submitNews(dto);
+    public ResponseResult submitNews(@RequestBody WmNewsDto dto) {
+        return wmNewsService.submitNews(dto);
+    }
+
+    @PostMapping("/down_or_up")
+    public ResponseResult downOrUp(@RequestBody WmNewsDto dto) {
+        return wmNewsService.downOrUp(dto);
     }
 }

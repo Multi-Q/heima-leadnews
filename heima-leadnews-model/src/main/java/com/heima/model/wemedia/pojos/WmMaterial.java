@@ -1,6 +1,5 @@
 package com.heima.model.wemedia.pojos;
 
-
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
@@ -43,8 +42,8 @@ public class WmMaterial implements Serializable {
 
     /**
      * 素材类型
-     0 图片
-     1 视频
+            0 图片
+            1 视频
      */
     @TableField("type")
     private Short type;

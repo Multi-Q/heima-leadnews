@@ -5,17 +5,12 @@ import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
 import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.RequestBody;
 
-/**
- * @author QRH
- * @date 2024/4/12 21:28
- * @description TODO
- */
 @Component
 public class IArticleClientFallback implements IArticleClient {
-
     @Override
-    public ResponseResult saveArticle(ArticleDto dto) {
-        return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR, "数据获取失败");
+    public ResponseResult saveArticle(@RequestBody ArticleDto dto) {
+        return ResponseResult.errorResult(AppHttpCodeEnum.SERVER_ERROR,"获取数据失败");
     }
 }

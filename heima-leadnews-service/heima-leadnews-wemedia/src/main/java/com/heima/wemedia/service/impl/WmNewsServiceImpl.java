@@ -8,6 +8,7 @@ import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.heima.common.constants.WemediaConstants;
+import com.heima.common.constants.WmNewsMessageConstants;
 import com.heima.common.exception.CustomException;
 import com.heima.model.common.dtos.PageResponseResult;
 import com.heima.model.common.dtos.ResponseResult;
@@ -17,96 +18,82 @@ import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
 import com.heima.model.wemedia.pojos.WmMaterial;
 import com.heima.model.wemedia.pojos.WmNews;
 import com.heima.model.wemedia.pojos.WmNewsMaterial;
-import com.heima.model.wemedia.pojos.WmUser;
+import com.heima.utils.thread.WmThreadLocalUtils;
 import com.heima.utils.thread.WmThreadLocalUtils;
 import com.heima.wemedia.mapper.WmMaterialMapper;
 import com.heima.wemedia.mapper.WmNewsMapper;
 import com.heima.wemedia.mapper.WmNewsMaterialMapper;
 import com.heima.wemedia.service.WmNewsAutoScanService;
 import com.heima.wemedia.service.WmNewsService;
+import com.heima.wemedia.service.WmNewsTaskService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.concurrent.TimeUnit;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
 @Slf4j
 @Transactional
 public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> implements WmNewsService {
+    @Autowired
+    private WmNewsAutoScanService wmNewsAutoScanService;
+    @Autowired
+    private KafkaTemplate<String, String> kafkaTemplate;
 
     @Autowired
+    private WmNewsTaskService wmNewsTaskService;
+    @Autowired
     private WmMaterialMapper wmMaterialMapper;
-
     @Autowired
     private WmNewsMaterialMapper wmNewsMaterialMapper;
 
-    @Autowired
-    private WmNewsAutoScanService wmNewsAutoScanService;
-
-
     /**
-     * 查询文章
+     * 条件查询文章列表
      *
      * @param dto
      * @return
      */
     @Override
-    public ResponseResult findAll(WmNewsPageReqDto dto) {
-
+    public ResponseResult findList(WmNewsPageReqDto dto) {
         //1.检查参数
-        if (dto == null) {
-            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
-        }
-        //分页参数检查
+        //分页检查
         dto.checkParam();
-        //获取当前登录人的信息
-        WmUser user = WmThreadLocalUtils.getUser();
-        if (user == null) {
-            return ResponseResult.errorResult(AppHttpCodeEnum.NEED_LOGIN);
-        }
 
         //2.分页条件查询
         IPage page = new Page(dto.getPage(), dto.getSize());
-        LambdaQueryWrapper<WmNews> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        LambdaQueryWrapper<WmNews> lambdaQueryWrapper = new LambdaQueryWrapper();
+        //状态精确查询
+        if (dto.getStatus() != null) {
+            lambdaQueryWrapper.eq(WmNews::getStatus, dto.getStatus());
+        }
 
-//        //状态精确查询
-//        if(dto.getStatus() != null){
-//            lambdaQueryWrapper.eq(WmNews::getStatus,dto.getStatus());
-//        }
-//        //频道精确查询
-//        if(dto.getChannelId() != null){
-//            lambdaQueryWrapper.eq(WmNews::getChannelId,dto.getChannelId());
-//        }
-//        //时间范围查询
-//        if(dto.getBeginPubDate()!=null && dto.getEndPubDate()!=null){
-//            lambdaQueryWrapper.between(WmNews::getPublishTime,dto.getBeginPubDate(),dto.getEndPubDate());
-//        }
-//        //关键字模糊查询eq
-//        if(StringUtils.isNotBlank(dto.getKeyword())){
-//            lambdaQueryWrapper.like(WmNews::getTitle,dto.getKeyword());
-//        }
-//        //查询当前登录用户的文章
-//        lambdaQueryWrapper.eq(WmNews::getUserId,user.getId());
-//        //发布时间倒序查询
-//        lambdaQueryWrapper.orderByDesc(WmNews::getCreatedTime);
+        //频道精确查询
+        if (dto.getChannelId() != null) {
+            lambdaQueryWrapper.eq(WmNews::getChannelId, dto.getChannelId());
+        }
 
+        //时间范围查询
+        if (dto.getBeginPubDate() != null && dto.getEndPubDate() != null) {
+            lambdaQueryWrapper.between(WmNews::getPublishTime, dto.getBeginPubDate(), dto.getEndPubDate());
+        }
 
-        lambdaQueryWrapper.eq(dto.getStatus() != null, WmNews::getStatus, dto.getStatus())
-                .eq(dto.getChannelId() != null, WmNews::getChannelId, dto.getChannelId())
-                .between(dto.getBeginPubDate() != null && dto.getEndPubDate() != null, WmNews::getPublishTime, dto.getBeginPubDate(), dto.getEndPubDate())
-                .like(StringUtils.isNotBlank(dto.getKeyword()), WmNews::getTitle, dto.getKeyword())
-                .eq(WmNews::getUserId, user.getId())
-                .orderByDesc(WmNews::getCreatedTime);
+        //关键字的模糊查询
+        if (StringUtils.isNotBlank(dto.getKeyword())) {
+            lambdaQueryWrapper.like(WmNews::getTitle, dto.getKeyword());
+        }
+
+        //查询当前登录人的文章
+        lambdaQueryWrapper.eq(WmNews::getUserId, WmThreadLocalUtils.getUser().getId());
+
+        //按照发布时间倒序查询
+        lambdaQueryWrapper.orderByDesc(WmNews::getPublishTime);
+
 
         page = page(page, lambdaQueryWrapper);
 
@@ -114,9 +101,9 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         ResponseResult responseResult = new PageResponseResult(dto.getPage(), dto.getSize(), (int) page.getTotal());
         responseResult.setData(page.getRecords());
 
+
         return responseResult;
     }
-
 
     /**
      * 发布修改文章或保存为草稿
@@ -126,15 +113,11 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
      */
     @Override
     public ResponseResult submitNews(WmNewsDto dto) {
-
-
         //0.条件判断
         if (dto == null || dto.getContent() == null) {
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
-
         //1.保存或修改文章
-
         WmNews wmNews = new WmNews();
         //属性拷贝 属性名词和类型相同才能拷贝
         BeanUtils.copyProperties(dto, wmNews);
@@ -148,28 +131,62 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         if (dto.getType().equals(WemediaConstants.WM_NEWS_TYPE_AUTO)) {
             wmNews.setType(null);
         }
-
         saveOrUpdateWmNews(wmNews);
-
         //2.判断是否为草稿  如果为草稿结束当前方法
         if (dto.getStatus().equals(WmNews.Status.NORMAL.getCode())) {
             return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
         }
-
         //3.不是草稿，保存文章内容图片与素材的关系
         //获取到文章内容中的图片信息
         List<String> materials = ectractUrlInfo(dto.getContent());
         saveRelativeInfoForContent(materials, wmNews.getId());
-
         //4.不是草稿，保存文章封面图片与素材的关系，如果当前布局是自动，需要匹配封面图片
         saveRelativeInfoForCover(dto, wmNews, materials);
-
         //审核文章
-        wmNewsAutoScanService.autoScanWmNews(wmNews.getId());
+        //        wmNewsAutoScanService.autoScanWmNews(wmNews.getId());
+        wmNewsTaskService.addNewsToTask(wmNews.getId(), wmNews.getPublishTime());
+        return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
+    }
+
+    /**
+     * 文章的上下架
+     *
+     * @param dto
+     * @return
+     */
+    @Override
+    public ResponseResult downOrUp(WmNewsDto dto) {
+        //1.检查参数
+        if (dto.getId() == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
+        }
+        //2.查询文章
+        WmNews wmNews = getById(dto.getId());
+        if (wmNews == null) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.DATA_NOT_EXIST, "文章不存在");
+        }
+        //3.判断文章是否已发布
+        if (!wmNews.getStatus().equals(WmNews.Status.PUBLISHED.getCode())) {
+            return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID, "当前文章不是发布状态，不能上下架");
+        }
+        //4.修改文章enable
+        if (dto.getEnable() != null && dto.getEnable() > -1 && dto.getEnable() < 2) {
+            update(Wrappers.<WmNews>lambdaUpdate()
+                    .set(WmNews::getEnable, dto.getEnable())
+                    .eq(WmNews::getId, wmNews.getId())
+            );
+        }
+        //发送消息，通知article端修改文章配置
+        if (wmNews.getArticleId() != null) {
+            Map<String, Object> map = new HashMap<>();
+            map.put("articleId", wmNews.getArticleId());
+            map.put("enable", dto.getEnable());
+            kafkaTemplate.send(WmNewsMessageConstants.WM_NEWS_UP_OR_DOWN_TOPIC, JSON.toJSONString(map));
+        }
 
         return ResponseResult.okResult(AppHttpCodeEnum.SUCCESS);
-
     }
+
 
     /**
      * 第一个功能：如果当前封面类型为自动，则设置封面类型的数据
@@ -235,7 +252,7 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
      * @param type
      */
     private void saveRelativeInfo(List<String> materials, Integer newsId, Short type) {
-        if (materials != null && !materials.isEmpty()) {
+        if (materials != null && materials.size() > 0) {
             //通过图片的url查询素材的id
             List<WmMaterial> dbMaterials = wmMaterialMapper.selectList(Wrappers.<WmMaterial>lambdaQuery().in(WmMaterial::getUrl, materials));
 
@@ -302,4 +319,6 @@ public class WmNewsServiceImpl extends ServiceImpl<WmNewsMapper, WmNews> impleme
         }
 
     }
+
+
 }

@@ -6,18 +6,21 @@ import com.heima.model.article.dtos.ArticleHomeDto;
 import com.heima.model.article.pojos.ApArticle;
 import com.heima.model.common.dtos.ResponseResult;
 
-/**
- * @author QRH
- * @date 2024/4/8 22:24
- * @description TODO
- */
-public interface ApArticleService extends IService<ApArticle>{
-    public ResponseResult load(ArticleHomeDto dto, Short type);
+public interface ApArticleService extends IService<ApArticle> {
+
+    /**
+     * 加载文章列表
+     * @param dto
+     * @param type  1 加载更多   2 加载最新
+     * @return
+     */
+    public ResponseResult load(ArticleHomeDto dto,Short type);
 
     /**
      * 保存app端相关文章
      * @param dto
      * @return
      */
-    ResponseResult saveArticle(ArticleDto dto) ;
+    public ResponseResult saveArticle(ArticleDto dto);
+
 }

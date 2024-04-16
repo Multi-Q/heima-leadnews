@@ -32,12 +32,9 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
     @Autowired
     private FileStorageService fileStorageService;
 
-    @Autowired
-    private WmMaterialMapper wmMaterialMapper;
 
     /**
      * 图片上传
-     *
      * @param multipartFile
      * @return
      */
@@ -45,7 +42,7 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
     public ResponseResult uploadPicture(MultipartFile multipartFile) {
 
         //1.检查参数
-        if (multipartFile == null || multipartFile.getSize() == 0) {
+        if(multipartFile == null || multipartFile.getSize() == 0){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
         }
 
@@ -57,7 +54,7 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         String fileId = null;
         try {
             fileId = fileStorageService.uploadImgFile("", fileName + postfix, multipartFile.getInputStream());
-            log.info("上传图片到MinIO中，fileId:{}", fileId);
+            log.info("上传图片到MinIO中，fileId:{}",fileId);
         } catch (IOException e) {
             e.printStackTrace();
             log.error("WmMaterialServiceImpl-上传文件失败");
@@ -67,8 +64,8 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         WmMaterial wmMaterial = new WmMaterial();
         wmMaterial.setUserId(WmThreadLocalUtils.getUser().getId());
         wmMaterial.setUrl(fileId);
-        wmMaterial.setIsCollection((short) 0);
-        wmMaterial.setType((short) 0);
+        wmMaterial.setIsCollection((short)0);
+        wmMaterial.setType((short)0);
         wmMaterial.setCreatedTime(new Date());
         save(wmMaterial);
 
@@ -97,7 +94,7 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         }
 
         //按照用户查询
-        lambdaQueryWrapper.eq(WmMaterial::getUserId, WmThreadLocalUtils.getUser().getId());
+        lambdaQueryWrapper.eq(WmMaterial::getUserId,WmThreadLocalUtils.getUser().getId());
 
         //按照时间倒序
         lambdaQueryWrapper.orderByDesc(WmMaterial::getCreatedTime);
@@ -110,16 +107,4 @@ public class WmMaterialServiceImpl extends ServiceImpl<WmMaterialMapper, WmMater
         responseResult.setData(page.getRecords());
         return responseResult;
     }
-
-    /**
-     * 图片收藏
-     * @param id 图片id
-     */
-    @Override
-    public ResponseResult collect(Integer id) {
-        return ResponseResult.okResult(wmMaterialMapper.updateById(id));
-    }
-
-
-
 }

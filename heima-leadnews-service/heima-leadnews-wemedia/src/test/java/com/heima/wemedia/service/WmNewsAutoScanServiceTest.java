@@ -1,27 +1,25 @@
 package com.heima.wemedia.service;
 
 import com.heima.wemedia.WemediaApplication;
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
 
-/**
- * @author QRH
- * @date 2024/4/12 20:51
- * @description TODO
- */
+
 @SpringBootTest(classes = WemediaApplication.class)
 @RunWith(SpringRunner.class)
-class WmNewsAutoScanServiceTest {
+public class WmNewsAutoScanServiceTest {
+
     @Autowired
     private WmNewsAutoScanService wmNewsAutoScanService;
 
     @Test
     public void autoScanWmNews() {
-        wmNewsAutoScanService.autoScanWmNews(6232);
+
+        wmNewsAutoScanService.autoScanWmNews(6240);
     }
 }

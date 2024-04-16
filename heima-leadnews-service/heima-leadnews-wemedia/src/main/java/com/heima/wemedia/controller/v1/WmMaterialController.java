@@ -4,18 +4,15 @@ import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmMaterialDto;
 import com.heima.wemedia.service.WmMaterialService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
-/**
- * @author QRH
- * @date 2024/4/10 19:31
- * @description TODO
- */
 @RestController
 @RequestMapping("/api/v1/material")
 public class WmMaterialController {
-
 
     @Autowired
     private WmMaterialService wmMaterialService;
@@ -30,13 +27,4 @@ public class WmMaterialController {
     public ResponseResult findList(@RequestBody WmMaterialDto dto){
         return wmMaterialService.findList(dto);
     }
-
-
-
-    @GetMapping("/collect")
-    public ResponseResult collect(Integer id){
-        return wmMaterialService.collect(id);
-    }
-
-
 }

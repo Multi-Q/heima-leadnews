@@ -6,7 +6,6 @@ import com.heima.article.mapper.ApArticleConfigMapper;
 import com.heima.article.mapper.ApArticleContentMapper;
 import com.heima.article.mapper.ApArticleMapper;
 import com.heima.article.service.ApArticleService;
-import com.heima.article.service.ArticleFreemarkerService;
 import com.heima.common.constants.ArticleConstants;
 import com.heima.model.article.dtos.ArticleDto;
 import com.heima.model.article.dtos.ArticleHomeDto;
@@ -15,60 +14,65 @@ import com.heima.model.article.pojos.ApArticleConfig;
 import com.heima.model.article.pojos.ApArticleContent;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
 
-
-/**
- * @author QRH
- * @date 2024/4/8 22:25
- * @description TODO
- */
 @Service
-public class ApArticleServiceImpl extends ServiceImpl<ApArticleMapper, ApArticle> implements ApArticleService {
+@Transactional
+@Slf4j
+public class ApArticleServiceImpl extends ServiceImpl<ApArticleMapper, ApArticle>  implements ApArticleService {
 
     @Autowired
     private ApArticleMapper apArticleMapper;
     @Autowired
     private ApArticleConfigMapper apArticleConfigMapper;
+
     @Autowired
     private ApArticleContentMapper apArticleContentMapper;
+    private final static  short MAX_PAGE_SIZE = 50;
 
-    @Autowired
-    private ArticleFreemarkerService articleFreemarkerService;
-
-    private final static short MAX_SIZE = 50;
-
+    /**
+     * 加载文章列表
+     * @param dto
+     * @param type 1 加载更多   2 加载最新
+     * @return
+     */
     @Override
-    public ResponseResult<List> load(ArticleHomeDto dto, Short type) {
-        //1、校验参数
+    public ResponseResult load(ArticleHomeDto dto, Short type) {
+        //1.检验参数
         //分页条数的校验
         Integer size = dto.getSize();
-        if (size == null || size == 0) {
-            dto.setSize(10);
+        if(size == null || size == 0){
+            size = 10;
         }
         //分页的值不超过50
-        size = Math.min(size, MAX_SIZE);
-        dto.setSize(size);
+        size = Math.min(size,MAX_PAGE_SIZE);
 
-        //校验参数
-        if (!type.equals(ArticleConstants.LOADTYPE_LOAD_MORE) && type.equals(ArticleConstants.LOADTYPE_LOAD_NEW)) {
+
+        //校验参数  -->type
+        if(!type.equals(ArticleConstants.LOADTYPE_LOAD_MORE) && !type.equals(ArticleConstants.LOADTYPE_LOAD_NEW)){
             type = ArticleConstants.LOADTYPE_LOAD_MORE;
         }
+
         //频道参数校验
-        if (StringUtils.isBlank(dto.getTag())) {
+        if(StringUtils.isBlank(dto.getTag())){
             dto.setTag(ArticleConstants.DEFAULT_TAG);
         }
-        //时间校验
-        if (dto.getMaxBehotTime() == null) dto.setMaxBehotTime(new Date());
-        if (dto.getMinBehotTime() == null) dto.setMinBehotTime(new Date());
-        List<ApArticle> articleList = apArticleMapper.loadArticleList(dto, type);
 
+        //时间校验
+        if(dto.getMaxBehotTime() == null)dto.setMaxBehotTime(new Date());
+        if(dto.getMinBehotTime() == null)dto.setMinBehotTime(new Date());
+
+        //2.查询
+        List<ApArticle> articleList = apArticleMapper.loadArticleList(dto, type);
+        //3.结果返回
         return ResponseResult.okResult(articleList);
     }
 
@@ -81,6 +85,12 @@ public class ApArticleServiceImpl extends ServiceImpl<ApArticleMapper, ApArticle
      */
     @Override
     public ResponseResult saveArticle(ArticleDto dto) {
+
+//        try {
+//            Thread.sleep(3000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
         //1.检查参数
         if(dto == null){
             return ResponseResult.errorResult(AppHttpCodeEnum.PARAM_INVALID);
@@ -106,7 +116,6 @@ public class ApArticleServiceImpl extends ServiceImpl<ApArticleMapper, ApArticle
             apArticleContent.setContent(dto.getContent());
             apArticleContentMapper.insert(apArticleContent);
 
-
         }else {
             //2.2 存在id   修改  文章  文章内容
 
@@ -117,10 +126,8 @@ public class ApArticleServiceImpl extends ServiceImpl<ApArticleMapper, ApArticle
             ApArticleContent apArticleContent = apArticleContentMapper.selectOne(Wrappers.<ApArticleContent>lambdaQuery().eq(ApArticleContent::getArticleId, dto.getId()));
             apArticleContent.setContent(dto.getContent());
             apArticleContentMapper.updateById(apArticleContent);
-
         }
-        //异步调用 生成静态文件上传到minio中
-        articleFreemarkerService.buildArticleToMinio(apArticle,dto.getContent());
+
         //3.结果返回  文章的id
         return ResponseResult.okResult(apArticle.getId());
     }

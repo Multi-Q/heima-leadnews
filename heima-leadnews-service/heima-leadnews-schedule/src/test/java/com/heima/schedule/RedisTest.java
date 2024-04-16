@@ -5,7 +5,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.data.redis.core.ZSetOperations;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.Set;
 
 /**
  * @author QRH
@@ -15,7 +18,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @SpringBootTest(classes = ScheduleApplication.class)
 @RunWith(SpringRunner.class)
-class RedisTest {
+public class RedisTest {
 
     @Autowired
     private CacheService cacheService;
@@ -25,5 +28,16 @@ class RedisTest {
         cacheService.lLeftPush("list001","hello,redis");
 
         System.out.println(cacheService.lRange("list001",0,-1));;
+    }
+
+    @Test
+    public void testZSet(){
+        cacheService.zAdd("zsetkey","hello zset 001",1000);
+        cacheService.zAdd("zsetkey","hello zset 002",888);
+        cacheService.zAdd("zsetkey","hello zset 003",10);
+        cacheService.zAdd("zsetkey","hello zset 004",9000);
+
+        Set<ZSetOperations.TypedTuple<String>> zsetkey = cacheService.zRangeByScoreWithScores("zsetkey", 0, 10000);
+        zsetkey.forEach(System.out::println);
     }
 }

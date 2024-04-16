@@ -16,7 +16,6 @@ import com.heima.common.aliyun.util.ClientUploader;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -127,7 +126,7 @@ public class GreenImageScan {
 
                     } else {
                         //单张图片处理失败, 原因视具体的情况详细分析
-                        System.out.println("任务进程失败. task response:" + JSON.toJSONString(taskResult));
+                        System.out.println("task process fail. task response:" + JSON.toJSONString(taskResult));
                         return null;
                     }
                 }
@@ -137,16 +136,10 @@ public class GreenImageScan {
                 /**
                  * 表明请求整体处理失败，原因视具体的情况详细分析
                  */
-                System.out.println("图片扫描请求失败. response:" + JSON.toJSONString(scrResponse));
-                //由于没加阿里云审核，直接给通过
-                resultMap.put("suggestion","通过，但请求码不是200");
-                return resultMap;
-//                return null;
+                System.out.println("the whole image scan request failed. response:" + JSON.toJSONString(scrResponse));
+                return null;
             }
         }
-        //由于没加阿里云审核，直接给通过
-        resultMap.put("suggestion","通过");
-        return resultMap;
-//        return null;
+        return null;
     }
 }

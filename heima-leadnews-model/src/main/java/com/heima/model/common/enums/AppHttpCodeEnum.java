@@ -26,12 +26,10 @@ public enum AppHttpCodeEnum {
     // 数据错误 3000~3500
     NO_OPERATOR_AUTH(3000,"无权限操作"),
     NEED_ADMIND(3001,"需要管理员权限"),
-    //调用者素材
-    MATERIASL_REFERENCE_FAIL(3002,"调用者素材失效")
 
+    // 自媒体文章错误 3501~3600
+    MATERIASL_REFERENCE_FAIL(3501,"素材引用失效");
 
-
-    ;
 
     int code;
     String errorMessage;

@@ -11,5 +11,4 @@ import java.util.List;
 public interface WmNewsMaterialMapper extends BaseMapper<WmNewsMaterial> {
 
      void saveRelations(@Param("materialIds") List<Integer> materialIds,@Param("newsId") Integer newsId, @Param("type")Short type);
-
 }

@@ -1,5 +1,3 @@
-virtual:
-  ip-address: 192.168.200.130
 server:
   port: 51802
 spring:
@@ -8,11 +6,17 @@ spring:
   cloud:
     nacos:
       discovery:
-        server-addr: ${virtual.ip-address}:8848
+        server-addr: 192.168.200.130:8848
       config:
-        server-addr: ${virtual.ip-address}:8848
+        server-addr: 192.168.200.130:8848
         file-extension: yml
+  freemarker:
+    template-loader-path: classpath:\templates
 
-  #忽略掉配置类
-  autoconfigure:
-    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+minio:
+  accessKey: minio
+  secretKey: minio123
+  bucket: leadnews
+  endpoint: http://172.17.2.60:9000
+  readPath: http://172.17.2.60:9000
+
