@@ -16,16 +16,19 @@
         <module name="heima-leadnews-feign-api" />
         <module name="heima-leadnews-article" />
         <module name="heima-leadnews-user" />
+        <module name="es-init" />
         <module name="minio_demo" />
         <module name="heima-leadnews-schedule" />
         <module name="heima-leadnews-utils" />
         <module name="heima-leadnews-app-gateway" />
         <module name="heima-leadnews-search" />
         <module name="heima-leadnews-common" />
+        <module name="mongo-demo" />
         <module name="heima-leadnews-model" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="es-init" target="1.8" />
       <module name="freemarker-demo" target="1.8" />
       <module name="heima-file-starter" target="1.8" />
       <module name="heima-leadnews" target="1.8" />
@@ -48,10 +51,12 @@
       <module name="kafka-demo" target="1.8" />
       <module name="minio-demo" target="1.8" />
       <module name="minio_demo" target="1.8" />
+      <module name="mongo-demo" target="1.8" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="es-init" options="-parameters" />
       <module name="freemarker-demo" options="-parameters" />
       <module name="heima-file-starter" options="-parameters" />
       <module name="heima-leadnews-apis" options="-parameters" />
@@ -72,6 +77,7 @@
       <module name="kafka-demo" options="-parameters" />
       <module name="minio-demo" options="-parameters" />
       <module name="minio_demo" options="-parameters" />
+      <module name="mongo-demo" options="-parameters" />
     </option>
   </component>
 </project>

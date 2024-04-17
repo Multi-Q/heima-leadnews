@@ -18,15 +18,12 @@ public class ElasticSearchConfig {
     private int port;
 
     @Bean
-    public RestHighLevelClient client(){
-        System.out.println(host);
-        System.out.println(port);
-        return new RestHighLevelClient(RestClient.builder(
-                new HttpHost(
-                        host,
-                        port,
-                        "http"
+    public RestHighLevelClient client() {
+        System.out.println("ElasticSearch配置：  端口="+host+"  ，  port="+port);
+        return new RestHighLevelClient(
+                RestClient.builder(
+                        new HttpHost(host, port, "http")
                 )
-        ));
+        );
     }
 }

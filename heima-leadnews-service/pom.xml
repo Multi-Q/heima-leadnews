@@ -25,6 +25,7 @@
     </properties>
 
     <dependencies>
+
         <!-- 引入依赖模块 -->
         <dependency>
             <groupId>com.heima</groupId>
