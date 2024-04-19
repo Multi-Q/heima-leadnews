@@ -1,5 +1,6 @@
 package com.heima.wemedia.controller.v1;
 
+import com.heima.apis.wemedia.INewsClient;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.wemedia.dtos.WmNewsDto;
 import com.heima.model.wemedia.dtos.WmNewsPageReqDto;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/api/v1/news")
-public class WmNewsController {
+public class WmNewsController  {
 
     @Autowired
     private WmNewsService wmNewsService;
@@ -32,4 +33,10 @@ public class WmNewsController {
     public ResponseResult downOrUp(@RequestBody WmNewsDto dto) {
         return wmNewsService.downOrUp(dto);
     }
+
+
+
+
+
+
 }

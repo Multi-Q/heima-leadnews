@@ -20,6 +20,8 @@
     <modules>
         <module>freemarker-demo</module>
         <module>minio-demo</module>
+        <module>es-init</module>
+        <module>mongo-demo</module>
     </modules>
 
 </project>
