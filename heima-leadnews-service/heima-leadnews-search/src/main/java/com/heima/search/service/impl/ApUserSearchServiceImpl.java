@@ -3,7 +3,6 @@ package com.heima.search.service.impl;
 import com.heima.model.common.dtos.ResponseResult;
 import com.heima.model.common.enums.AppHttpCodeEnum;
 import com.heima.model.search.dtos.HistorySearchDto;
-import com.heima.model.user.pojos.ApUser;
 import com.heima.search.pojos.ApUserSearch;
 import com.heima.search.service.ApUserSearchService;
 import com.heima.utils.thread.AppThreadLocalUtil;

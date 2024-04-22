@@ -2,49 +2,36 @@ package com.heima.wemedia.controller.v1;
 
 import com.heima.apis.wemedia.IWemediaClient;
 import com.heima.model.common.dtos.ResponseResult;
-import com.heima.model.wemedia.dtos.WmSensitiveDto;
-import com.heima.model.wemedia.dtos.WmSensitivePageReqDto;
+import com.heima.model.wemedia.dtos.SensitiveDto;
+import com.heima.model.wemedia.pojos.WmSensitive;
 import com.heima.wemedia.service.WmSensitiveService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * @author QRH
- * @date 2024/4/17 23:37
- * @description TODO
- */
 @RestController
-@RequestMapping("/api/v1/wemedia_sensitive")
-public class WmSensitiveController implements IWemediaClient{
+@RequestMapping("/api/v1/sensitive")
+public class WmSensitiveController {
 
     @Autowired
     private WmSensitiveService wmSensitiveService;
 
-    /**
-     * 根据敏感词id删除敏感词 该方法给管理员使用
-     *
-     * @param id 敏感词id
-     * @return void
-     */
-    @DeleteMapping("/del/{id}")
-    public ResponseResult deleteSensitiveById(@PathVariable("id") Integer id) {
-        return wmSensitiveService.deleteSensitiveById(id);
-    }
-
-    @PostMapping("/find")
-    public ResponseResult findListSensitive(@RequestBody WmSensitivePageReqDto dto){
-        return wmSensitiveService.findList(dto) ;
+    @PostMapping("/list")
+    public ResponseResult list(@RequestBody SensitiveDto dto){
+        return wmSensitiveService.listSensitive(dto);
     }
 
     @PostMapping("/save")
-    public ResponseResult saveSensitive(@RequestBody WmSensitiveDto dto){
-        return wmSensitiveService.saveOrUpdate(dto);
+    public ResponseResult insert(@RequestBody WmSensitive wmSensitive){
+        return wmSensitiveService.insertSensitive(wmSensitive);
     }
 
     @PostMapping("/update")
-    public ResponseResult updateSensitive(@RequestBody WmSensitiveDto dto){
-        return wmSensitiveService.saveOrUpdate(dto);
+    public ResponseResult update(@RequestBody WmSensitive wmSensitive){
+        return wmSensitiveService.updateSensitive(wmSensitive);
     }
 
-
+    @DeleteMapping("/del/{id}")
+    public ResponseResult delete(@PathVariable("id") Integer id){
+        return wmSensitiveService.deleteSensitive(id);
+    }
 }

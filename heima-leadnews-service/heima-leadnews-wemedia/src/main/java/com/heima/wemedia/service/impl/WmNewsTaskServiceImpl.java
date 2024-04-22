@@ -21,24 +21,24 @@ import java.util.Date;
 
 @Service
 @Slf4j
-public class WmNewsTaskServiceImpl implements WmNewsTaskService {
+public class WmNewsTaskServiceImpl  implements WmNewsTaskService {
+
 
     @Autowired
     private IScheduleClient scheduleClient;
 
-    @Autowired
-    private WmNewsAutoScanService wmNewsAutoScanService;
 
     /**
      * 添加任务到延迟队列中
-     *
      * @param id          文章的id
      * @param publishTime 发布的时间  可以做为任务的执行时间
      */
     @Override
     @Async
     public void addNewsToTask(Integer id, Date publishTime) {
-        log.info("添加任务到延迟服务中WmNewsTaskServiceImpl.java--addNewsToTask() ----begin");
+
+        log.info("添加任务到延迟服务中----begin");
+
         Task task = new Task();
         task.setExecuteTime(publishTime.getTime());
         task.setTaskType(TaskTypeEnum.NEWS_SCAN_TIME.getTaskType());
@@ -49,26 +49,29 @@ public class WmNewsTaskServiceImpl implements WmNewsTaskService {
 
         scheduleClient.addTask(task);
 
-        log.info("添加任务到延迟服务中WmNewsTaskServiceImpl.java--addNewsToTask() ----end");
+        log.info("添加任务到延迟服务中----end");
 
     }
+
+    @Autowired
+    private WmNewsAutoScanService wmNewsAutoScanService;
 
     /**
-     * 消费延迟队列数据
+     * 消费任务，审核文章
      */
-    @Scheduled(fixedRate = 10000)
+//    @Scheduled(fixedRate = 1000)
     @Override
-    @SneakyThrows
     public void scanNewsByTask() {
-        log.info("文章审核---WmNewsTaskServiceImpl.java-scanNewsByTask()----消费任务执行---begin---");
+
+        log.info("消费任务，审核文章");
+
         ResponseResult responseResult = scheduleClient.poll(TaskTypeEnum.NEWS_SCAN_TIME.getTaskType(), TaskTypeEnum.NEWS_SCAN_TIME.getPriority());
-        if (responseResult.getCode().equals(200) && responseResult.getData() != null) {
-            String json_str = JSON.toJSONString(responseResult.getData());
-            Task task = JSON.parseObject(json_str, Task.class);
-            byte[] parameters = task.getParameters();
-            WmNews wmNews = ProtostuffUtil.deserialize(parameters, WmNews.class);
+        if(responseResult.getCode().equals(200) && responseResult.getData() != null){
+            Task task = JSON.parseObject(JSON.toJSONString(responseResult.getData()), Task.class);
+            WmNews wmNews = ProtostuffUtil.deserialize(task.getParameters(), WmNews.class);
             wmNewsAutoScanService.autoScanWmNews(wmNews.getId());
+
         }
-        log.info("文章审核---WmNewsTaskServiceImpl.java-scanNewsByTask()----消费任务执行---end---");
     }
+
 }

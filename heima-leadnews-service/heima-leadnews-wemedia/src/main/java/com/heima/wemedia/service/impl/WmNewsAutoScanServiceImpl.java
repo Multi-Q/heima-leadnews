@@ -46,7 +46,6 @@ public class WmNewsAutoScanServiceImpl implements WmNewsAutoScanService {
 
     @Autowired
     private GreenImageScan greenImageScan;
-
     /**
      * 自媒体文章审核
      *
@@ -88,42 +87,6 @@ public class WmNewsAutoScanServiceImpl implements WmNewsAutoScanService {
         }
     }
 
-
-    /**
-     * 保存app端相关的文章数据
-     *
-     * @param wmNews
-     */
-    private ResponseResult saveAppArticle(WmNews wmNews) {
-
-        ArticleDto dto = new ArticleDto();
-        //属性的拷贝
-        BeanUtils.copyProperties(wmNews, dto);
-        //文章的布局
-        dto.setLayout(wmNews.getType());
-        //频道
-        WmChannel wmChannel = wmChannelMapper.selectById(wmNews.getChannelId());
-        if (wmChannel != null) {
-            dto.setChannelName(wmChannel.getName());
-        }
-
-        //作者
-        dto.setAuthorId(wmNews.getUserId().longValue());
-        WmUser wmUser = wmUserMapper.selectById(wmNews.getUserId());
-        if (wmUser != null) {
-            dto.setAuthorName(wmUser.getName());
-        }
-
-        //设置文章id
-        if (wmNews.getArticleId() != null) {
-            dto.setId(wmNews.getArticleId());
-        }
-        dto.setCreatedTime(new Date());
-
-        ResponseResult responseResult = articleClient.saveArticle(dto);
-        return responseResult;
-
-    }
 
 
     /**
@@ -270,4 +233,44 @@ public class WmNewsAutoScanServiceImpl implements WmNewsAutoScanService {
         return resultMap;
 
     }
+
+
+    /**
+     * 保存app端相关的文章数据
+     * @param wmNews
+     */
+    @Override
+    public ResponseResult saveAppArticle(WmNews wmNews) {
+
+        ArticleDto dto = new ArticleDto();
+        //属性的拷贝
+        BeanUtils.copyProperties(wmNews,dto);
+        //文章的布局
+        dto.setLayout(wmNews.getType());
+        //频道
+        WmChannel wmChannel = wmChannelMapper.selectById(wmNews.getChannelId());
+        if(wmChannel != null){
+            dto.setChannelName(wmChannel.getName());
+        }
+
+        //作者
+        dto.setAuthorId(wmNews.getUserId().longValue());
+        WmUser wmUser = wmUserMapper.selectById(wmNews.getUserId());
+        if(wmUser != null){
+            dto.setAuthorName(wmUser.getName());
+        }
+
+        //设置文章id
+        if(wmNews.getArticleId() != null){
+            dto.setId(wmNews.getArticleId());
+        }
+        dto.setCreatedTime(new Date());
+
+        ResponseResult responseResult = articleClient.saveArticle(dto);
+        return responseResult;
+
+    }
+
+
+
 }

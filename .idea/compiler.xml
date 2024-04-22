@@ -12,6 +12,7 @@
         <module name="minio-demo" />
         <module name="heima-leadnews-wemedia-gateway" />
         <module name="heima-leadnews-wemedia" />
+        <module name="heima-leadnews-behavior" />
         <module name="kafka-demo" />
         <module name="heima-leadnews-feign-api" />
         <module name="heima-leadnews-article" />
@@ -21,6 +22,7 @@
         <module name="es-init" />
         <module name="minio_demo" />
         <module name="heima-leadnews-schedule" />
+        <module name="heima-leadnews-comment" />
         <module name="heima-leadnews-utils" />
         <module name="heima-leadnews-app-gateway" />
         <module name="heima-leadnews-search" />
@@ -35,11 +37,14 @@
       <module name="heima-file-starter" target="1.8" />
       <module name="heima-leadnews" target="1.8" />
       <module name="heima-leadnews-admin" target="1.8" />
+      <module name="heima-leadnews-admin (1)" target="1.8" />
       <module name="heima-leadnews-admin-gateway" target="1.8" />
       <module name="heima-leadnews-apis" target="1.8" />
       <module name="heima-leadnews-app-gateway" target="1.8" />
       <module name="heima-leadnews-article" target="1.8" />
       <module name="heima-leadnews-basic" target="1.8" />
+      <module name="heima-leadnews-behavior" target="1.8" />
+      <module name="heima-leadnews-comment" target="1.8" />
       <module name="heima-leadnews-common" target="1.8" />
       <module name="heima-leadnews-feign-api" target="1.8" />
       <module name="heima-leadnews-gateway" target="1.8" />
@@ -64,10 +69,13 @@
       <module name="freemarker-demo" options="-parameters" />
       <module name="heima-file-starter" options="-parameters" />
       <module name="heima-leadnews-admin" options="-parameters" />
+      <module name="heima-leadnews-admin (1)" options="-parameters" />
       <module name="heima-leadnews-admin-gateway" options="-parameters" />
       <module name="heima-leadnews-apis" options="-parameters" />
       <module name="heima-leadnews-app-gateway" options="-parameters" />
       <module name="heima-leadnews-article" options="-parameters" />
+      <module name="heima-leadnews-behavior" options="-parameters" />
+      <module name="heima-leadnews-comment" options="-parameters" />
       <module name="heima-leadnews-common" options="-parameters" />
       <module name="heima-leadnews-feign-api" options="-parameters" />
       <module name="heima-leadnews-gateway" options="" />

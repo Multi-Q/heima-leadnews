@@ -1,7 +1,6 @@
 package com.heima.common.constants;
 
 public class WemediaConstants {
-
     public static final Short COLLECT_MATERIAL = 1;//收藏
 
     public static final Short CANCEL_COLLECT_MATERIAL = 0;//取消收藏
@@ -15,4 +14,7 @@ public class WemediaConstants {
 
     public static final Short WM_CONTENT_REFERENCE = 0;
     public static final Short WM_COVER_REFERENCE = 1;
+
+    public static final Short WM_NEWS_AUTH_PASS = 4;
+    public static final Short WM_NEWS_AUTH_FAIL = 2;
 }

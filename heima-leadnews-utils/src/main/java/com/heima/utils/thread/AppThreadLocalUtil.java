@@ -1,7 +1,6 @@
 package com.heima.utils.thread;
 
 import com.heima.model.user.pojos.ApUser;
-import com.heima.model.wemedia.pojos.WmUser;
 
 /**
  * @author QRH

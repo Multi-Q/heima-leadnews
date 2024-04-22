@@ -13,6 +13,8 @@ import java.util.Date;
  * <p>
  * 敏感词信息表
  * </p>
+ *
+ * @author itheima
  */
 @Data
 @TableName("wm_sensitive")
