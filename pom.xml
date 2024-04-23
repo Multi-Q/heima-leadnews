@@ -4,19 +4,22 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.heima</groupId>
-    <artifactId>heima-leadnews</artifactId>
+    <groupId>com.qrh</groupId>
+    <artifactId>qrh-leadnews</artifactId>
+
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
+
+
     <modules>
-        <module>heima-leadnews-common</module>
-        <module>heima-leadnews-utils</module>
-        <module>heima-leadnews-model</module>
-        <module>heima-leadnews-feign-api</module>
-        <module>heima-leadnews-service</module>
-        <module>heima-leadnews-gateway</module>
-        <module>heima-leadnews-test</module>
-        <module>heima-leadnews-basic</module>
+        <module>qrh-leadnews-common</module>
+        <module>qrh-leadnews-utils</module>
+        <module>qrh-leadnews-model</module>
+        <module>qrh-leadnews-feign-api</module>
+        <module>qrh-leadnews-service</module>
+        <module>qrh-leadnews-gateway</module>
+        <module>qrh-leadnews-test</module>
+        <module>qrh-leadnews-basic</module>
     </modules>
 
     <!-- 继承Spring boot工程 -->
@@ -83,28 +86,29 @@
             <scope>provided</scope>
         </dependency>
     </dependencies>
+
     <dependencyManagement>
 
         <dependencies>
             <!--内部依赖工程-->
             <dependency>
-                <artifactId>heima-leadnews-feign-api</artifactId>
-                <groupId>com.heima</groupId>
+                <artifactId>qrh-leadnews-feign-api</artifactId>
+                <groupId>com.qrh</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>heima-leadnews-common</artifactId>
-                <groupId>com.heima</groupId>
+                <artifactId>qrh-leadnews-common</artifactId>
+                <groupId>com.qrh</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>heima-leadnews-model</artifactId>
-                <groupId>com.heima</groupId>
+                <artifactId>qrh-leadnews-model</artifactId>
+                <groupId>com.qrh</groupId>
                 <version>${project.version}</version>
             </dependency>
             <dependency>
-                <artifactId>heima-leadnews-utils</artifactId>
-                <groupId>com.heima</groupId>
+                <artifactId>qrh-leadnews-utils</artifactId>
+                <groupId>com.qrh</groupId>
                 <version>${project.version}</version>
             </dependency>
             <!-- Spring boot 特殊处理包 -->

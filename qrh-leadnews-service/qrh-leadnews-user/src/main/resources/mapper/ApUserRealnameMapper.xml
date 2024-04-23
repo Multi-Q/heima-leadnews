@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qrh.user.mapper.ApUserRealnameMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="BaseResultMap" type="com.qrh.model.user.pojos.ApUserRealname">
+        <id column="id" property="id" />
+        <result column="user_id" property="userId" />
+        <result column="name" property="name" />
+        <result column="idno" property="idno" />
+        <result column="font_image" property="fontImage" />
+        <result column="back_image" property="backImage" />
+        <result column="hold_image" property="holdImage" />
+        <result column="live_image" property="liveImage" />
+        <result column="status" property="status" />
+        <result column="reason" property="reason" />
+        <result column="created_time" property="createdTime" />
+        <result column="submited_time" property="submitedTime" />
+        <result column="updated_time" property="updatedTime" />
+    </resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        id, user_id, name, idno, font_image, back_image, hold_image, live_image, status, reason, created_time, submited_time, updated_time
+    </sql>
+
+</mapper>
