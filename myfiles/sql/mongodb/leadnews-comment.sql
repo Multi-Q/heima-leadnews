@@ -1,0 +1,424 @@
+/*
+ Navicat Premium Data Transfer
+
+ Source Server         : leadnews_mongo
+ Source Server Type    : MongoDB
+ Source Server Version : 40201
+ Source Host           : 192.168.200.130:27017
+ Source Schema         : leadnews-comment
+
+ Target Server Type    : MongoDB
+ Target Server Version : 40201
+ File Encoding         : 65001
+
+ Date: 23/04/2024 19:43:47
+*/
+
+
+// ----------------------------
+// Collection structure for ap_comment
+// ----------------------------
+db.getCollection("ap_comment").drop();
+db.createCollection("ap_comment");
+
+// ----------------------------
+// Documents of ap_comment
+// ----------------------------
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c03921a7a230499292e15f"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "111",
+    likes: NumberInt("1"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T03:44:33.942Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c05ed5a7a230499292e160"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "11222",
+    likes: NumberInt("1"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T06:25:25.994Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c060a0a7a230499292e161"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "222",
+    likes: NumberInt("1"),
+    reply: NumberInt("1"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T06:33:04.549Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c060b7a7a230499292e162"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "333",
+    likes: NumberInt("1"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T06:33:27.56Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c06968a7a230499292e164"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "老李，牛逼",
+    likes: NumberInt("1"),
+    reply: NumberInt("1"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T07:10:32.868Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c06eda4e71825b1b14f0f7"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "2345",
+    likes: NumberInt("0"),
+    reply: NumberInt("6"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T07:33:46.546Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c07a444e71825b1b14f0f8"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "5656",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T08:22:28.455Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a4fddf781003cc72e68"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "55",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:49:19.671Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a51ddf781003cc72e69"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "66",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:49:21.728Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a53ddf781003cc72e6a"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "77",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:49:23.381Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a55ddf781003cc72e6b"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "88",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:49:25.072Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a79ddf781003cc72e6c"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "777777",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:01.661Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20a7dddf781003cc72e6d"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "888",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:05.405Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20aa8ddf781003cc72e6e"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "8877",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:48.103Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20aaaddf781003cc72e6f"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "66",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:50.32Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20aacddf781003cc72e70"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "55",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:52.617Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20aaeddf781003cc72e71"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "44",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:50:54.238Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20f8673ee3037f82a6c5c"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "77",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T13:11:34.337Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c20fb773ee3037f82a6c5d"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "88",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T13:12:23.036Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+db.getCollection("ap_comment").insert([ {
+    _id: ObjectId("60c2107f73ee3037f82a6c5e"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    entryId: NumberLong("1401009531265355778"),
+    type: NumberInt("0"),
+    content: "1133",
+    likes: NumberInt("0"),
+    reply: NumberInt("0"),
+    flag: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T13:15:43.939Z"),
+    _class: "com.heima.comment.pojos.ApComment"
+} ]);
+
+// ----------------------------
+// Collection structure for ap_comment_like
+// ----------------------------
+db.getCollection("ap_comment_like").drop();
+db.createCollection("ap_comment_like");
+
+// ----------------------------
+// Documents of ap_comment_like
+// ----------------------------
+db.getCollection("ap_comment_like").insert([ {
+    _id: ObjectId("60c061eba7a230499292e163"),
+    authorId: NumberInt("4"),
+    commentId: "60c03921a7a230499292e15f",
+    _class: "com.heima.comment.pojos.ApCommentLike"
+} ]);
+db.getCollection("ap_comment_like").insert([ {
+    _id: ObjectId("60c06e4b4e71825b1b14f0f1"),
+    authorId: NumberInt("4"),
+    commentId: "60c06968a7a230499292e164",
+    _class: "com.heima.comment.pojos.ApCommentLike"
+} ]);
+db.getCollection("ap_comment_like").insert([ {
+    _id: ObjectId("60c06e4d4e71825b1b14f0f2"),
+    authorId: NumberInt("4"),
+    commentId: "60c05ed5a7a230499292e160",
+    _class: "com.heima.comment.pojos.ApCommentLike"
+} ]);
+db.getCollection("ap_comment_like").insert([ {
+    _id: ObjectId("60c06e4e4e71825b1b14f0f3"),
+    authorId: NumberInt("4"),
+    commentId: "60c060a0a7a230499292e161",
+    _class: "com.heima.comment.pojos.ApCommentLike"
+} ]);
+db.getCollection("ap_comment_like").insert([ {
+    _id: ObjectId("60c06e4f4e71825b1b14f0f4"),
+    authorId: NumberInt("4"),
+    commentId: "60c060b7a7a230499292e162",
+    _class: "com.heima.comment.pojos.ApCommentLike"
+} ]);
+
+// ----------------------------
+// Collection structure for ap_comment_repay
+// ----------------------------
+db.getCollection("ap_comment_repay").drop();
+db.createCollection("ap_comment_repay");
+
+// ----------------------------
+// Documents of ap_comment_repay
+// ----------------------------
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c06e774e71825b1b14f0f5"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c060a0a7a230499292e161",
+    content: "老王更牛逼",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T07:32:07.281Z"),
+    updatedTime: ISODate("2021-06-09T07:32:07.281Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c06eab4e71825b1b14f0f6"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06968a7a230499292e164",
+    content: "1233",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-09T07:32:59.766Z"),
+    updatedTime: ISODate("2021-06-09T07:32:59.766Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c202e6ddf781003cc72e62"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "11",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:17:42.366Z"),
+    updatedTime: ISODate("2021-06-10T12:17:42.366Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c202e8ddf781003cc72e63"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "22",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:17:44.758Z"),
+    updatedTime: ISODate("2021-06-10T12:17:44.758Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c202ebddf781003cc72e64"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "33",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:17:47.486Z"),
+    updatedTime: ISODate("2021-06-10T12:17:47.486Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c202f2ddf781003cc72e65"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "44",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:17:54.231Z"),
+    updatedTime: ISODate("2021-06-10T12:17:54.231Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c20430ddf781003cc72e66"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "55",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:23:12.688Z"),
+    updatedTime: ISODate("2021-06-10T12:23:12.688Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
+db.getCollection("ap_comment_repay").insert([ {
+    _id: ObjectId("60c2052bddf781003cc72e67"),
+    authorId: NumberInt("4"),
+    authorName: "admin",
+    commentId: "60c06eda4e71825b1b14f0f7",
+    content: "66",
+    likes: NumberInt("0"),
+    createdTime: ISODate("2021-06-10T12:27:23.049Z"),
+    updatedTime: ISODate("2021-06-10T12:27:23.049Z"),
+    _class: "com.heima.comment.pojos.ApCommentRepay"
+} ]);
