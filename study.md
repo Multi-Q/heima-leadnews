@@ -2,6 +2,14 @@
 
 # 一、前言
 
+> app端启动：localhost:8801
+>
+> 自媒体端启动：localhost:8002
+>
+> 管理员端启动：localhost:8003
+>
+>
+
 ## 1、Docker安装Nacos
 
 步骤：
@@ -42,7 +50,7 @@ http://192.168.200.130:8848/nacos
 ①在nginx的conf目录下新建一个文件夹`leadnews.conf`，在该文件夹中新建`heima-leadnews-app.conf`文件
 
 ``` js
-upstream heima-app-gateway{
+upstream qrh-app-gateway{
     server localhost:51601;
 }
 
@@ -54,7 +62,7 @@ server{
     }
     
     location ~/app/(.*) {
-        proxy_pass http://heima-app-gateway/$1;
+        proxy_pass http://qrh-app-gateway/$1;
         proxy_set_header Host $host; #不改变源请求头的值
         proxy_pass_request_body on; #开启获取请求体
         proxy_pass_request_headers on; #开启获取请求头
@@ -162,6 +170,7 @@ http
 `map.keyname.prop`或`map['keyname'].prop`
 
 遍历map集合：
+
 ```jsp
 <#-- ?keys 表示是获取stuMap中的所有key -->
 <#list stuMap?keys as key>
@@ -181,8 +190,8 @@ if指令：`<#if></#if>`
 
 ### 3.3.4 运算符与比较运算符
 
-
 空值处理，语法：`变量??`
+
 ```jsp
 <#if stu.age??>
     <#list stus as stu>
@@ -192,6 +201,7 @@ if指令：`<#if></#if>`
 ```
 
 缺失变量，格式`变量!替换值`
+
 ```jsp
 <#--如果name值不存在或为空则用""空字符串替代-->
     <p>Hello ${name!""}</p>
@@ -200,6 +210,7 @@ if指令：`<#if></#if>`
 ### 3.3.5 内建函数
 
 语法格式：`变量+？+函数名称`
+
 ```jsp
     <#--集合大小-->
     <p>${stuList?size}</p>
@@ -213,15 +224,19 @@ if指令：`<#if></#if>`
 # 四、MinIO分布式文件存储
 
 ## 4.1 Docker内安装MinIO
+
 ①拉取镜像
+
 ```cmd
 docker pull minio/minio
 ```
 
 ②创建容器
+
 ```cmd
 docker run -p 9000:9000 --name minio -d --restart=always -e "MINIO_ACCESS_KEY=minio" -e "MINIO_SECRET_KEY=minio" -v /home/data:/data -v /home/config:/root/.minio minio/minio server /data
 ```
+
 ③访问地址
 http://192.168.200.130:9000
 
@@ -232,27 +247,30 @@ http://192.168.200.130:9000
 ①创建一个`minio_demo`模块
 
 ②导入相关依赖
+
 ```xml
- <dependencies>
 
-        <dependency>
-            <groupId>io.minio</groupId>
-            <artifactId>minio</artifactId>
-            <version>7.1.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-web</artifactId>
-        </dependency>
+<dependencies>
 
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-test</artifactId>
-        </dependency>
-    </dependencies>
+    <dependency>
+        <groupId>io.minio</groupId>
+        <artifactId>minio</artifactId>
+        <version>7.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+    </dependency>
+</dependencies>
 ```
 
 ③创建测试类
+
 ```java
 package com.itheima.minio.test;
 
